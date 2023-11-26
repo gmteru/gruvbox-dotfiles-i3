@@ -1,0 +1,211 @@
+# Font for window titles. Will also be used by the bar unless a different font is set
+font pango: SF Compact Text
+
+# set the mod key to the winkey:
+set $mod Mod4
+
+#####################
+# workspace layout: #
+#####################
+
+# default i3 tiling mode:
+workspace_layout default
+
+########################
+# options for windows: #
+########################
+
+#border indicator on windows: 
+new_window pixel 3
+
+# Set inner/outer gaps
+gaps inner 35
+gaps outer 20
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# switch to workspace
+bindsym $mod+1    workspace  $ws1
+bindsym $mod+2    workspace  $ws2
+bindsym $mod+3    workspace  $ws3
+bindsym $mod+4    workspace  $ws4
+bindsym $mod+5    workspace  $ws5
+bindsym $mod+6    workspace  $ws6
+bindsym $mod+7    workspace  $ws7
+bindsym $mod+8    workspace  $ws8
+bindsym $mod+9    workspace  $ws9
+bindsym $mod+0    workspace  $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1    move container to workspace  $ws1
+bindsym $mod+Shift+2    move container to workspace  $ws2
+bindsym $mod+Shift+3    move container to workspace  $ws3
+bindsym $mod+Shift+4    move container to workspace  $ws4
+bindsym $mod+Shift+5    move container to workspace  $ws5
+bindsym $mod+Shift+6    move container to workspace  $ws6
+bindsym $mod+Shift+7    move container to workspace  $ws7
+bindsym $mod+Shift+8    move container to workspace  $ws8
+bindsym $mod+Shift+9    move container to workspace  $ws9
+bindsym $mod+Shift+0    move container to workspace  $ws10
+
+# resize window (you can also use the mouse for that):
+mode "resize" {
+
+  bindsym l resize shrink width 10 px or 10 ppt
+  bindsym k resize grow height 10 px or 10 ppt
+  bindsym j resize shrink height 10 px or 10 ppt
+  bindsym h resize grow width 10 px or 10 ppt
+
+  bindsym Right resize shrink width 10 px or 10 ppt
+  bindsym Up    resize grow height 10 px or 10 ppt
+  bindsym Down  resize shrink height 10 px or 10 ppt
+  bindsym Left  resize grow width 10 px or 10 ppt
+
+	bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+######################################
+# keybindings for different actions: #
+######################################
+
+# start a terminal
+bindsym $mod+Return exec kitty
+
+# start a browser
+bindsym $mod+w exec firefox
+
+# start a file manager
+bindsym $mod+q exec thunar
+# make a screenshot
+bindsym Print exec scrot ~/Pictures/screenshots/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
+
+# kill focused window
+bindsym $mod+c kill
+
+# lock the screen 
+bindsym $mod+b exec dm-tool switch-to-greeter 
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# start rofi
+bindsym $mod+d exec rofi -show run
+
+# change focus
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+h focus left
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+n split h
+
+# split in vertical orientation
+bindsym $mod+m split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# Media volume controls
+bindsym XF86AudioMute        exec pamixer -t
+bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioRaiseVolume exec pamixer -i 5
+
+##########################################
+# configuration for workspace behaviour: #
+##########################################
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# use workspaces on different displays:
+# you can get from xrandr command
+workspace $ws1  output DP-2
+workspace $ws2  output DP-2
+workspace $ws3  output DP-2
+workspace $ws4  output DP-2
+workspace $ws5  output DP-2
+workspace $ws6  output DP-2
+workspace $ws7  output DP-2
+workspace $ws8  output DP-2
+workspace $ws9  output DP-2
+workspace $ws10 output DVI-D-1
+
+#############################################
+# autostart applications/services on login: #
+#############################################
+
+# num lock activated
+exec --no-startup-id numlockx on
+
+# set wallpaper
+exec --no-startup-id nitrogen --restore
+
+# start picom
+exec --no-startup-id picom
+
+# swap capslock to escape
+exec --no-startup-id setxkbmap -option caps:escape
+
+# set floating (nontiling) for special apps
+for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
+
+# execute i3 autotiling script
+exec_always --no-startup-id autotiling
+
+# set primary display and display orientation
+exec_always --no-startup-id xrandr --output DP-2 --primary --left-of DVI-D-1
+
+######################################
+# color settings for bar and windows #
+#####################################0
+
+# define colors for windows:
+#class		        	      border		bground		text		  indicator	child_border
+client.focused			      #282828   #282828   #d5c4a1   #a89984   #a89984
+client.focused_inactive		#282828   #282828   #d5c4a1   #282828   #282828
+client.unfocused		      #282828   #282828   #d5c4a1		#282828   #282828
+client.urgent			        #282828		#900000		#d5c4a1		#282828		#282828
+client.placeholder		    #000000		#0c0c0c		#d5c4a1		#282828		#282828
+client.background		      #ffffff
